@@ -25,7 +25,7 @@ impl Ticket {
         }
         if status != "To-Do" && status != "In Progress" && status != "Done" {
             panic!("Only `To-Do`, `In Progress`, and `Done` statuses are allowed");
-        }
+        } 
 
         Ticket {
             title,
@@ -34,16 +34,16 @@ impl Ticket {
         }
     }
 
-    pub fn title(self) -> String {
-        self.title
+    pub fn title(&self) -> &str {
+        &self.title
     }
 
-    pub fn description(self) -> String {
-        self.description
+    pub fn description(&self) -> &str {
+        &self.description
     }
 
-    pub fn status(self) -> String {
-        self.status
+    pub fn status(&self) -> &str {
+        &self.status
     }
 }
 
