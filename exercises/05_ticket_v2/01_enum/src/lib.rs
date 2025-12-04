@@ -1,17 +1,21 @@
 // TODO: use `Status` as type for `Ticket::status`
 //   Adjust the signature and implementation of all other methods as necessary.
 
+
 #[derive(Debug, PartialEq)]
 // `derive`s are recursive: it can only derive `PartialEq` if all fields also implement `PartialEq`.
 // Same holds for `Debug`. Do what you must with `Status` to make this work.
 struct Ticket {
     title: String,
     description: String,
-    status: String,
+    status: Status,
 }
 
+#[derive(Debug, PartialEq, Clone, Copy)]
 enum Status {
-    // TODO: add the missing variants
+    ToDo,
+    InProgress,
+    Done
 }
 
 impl Ticket {
@@ -32,10 +36,14 @@ impl Ticket {
             panic!("Only `To-Do`, `In Progress`, and `Done` statuses are allowed");
         }
 
+        let mut status_enum: Status = Status::ToDo;
+        if status == "In Progress" { status_enum = Status::InProgress };
+        if status == "Done" { status_enum = Status::Done };
+
         Ticket {
             title,
             description,
-            status,
+            status: {status_enum},
         }
     }
 
@@ -47,8 +55,12 @@ impl Ticket {
         &self.description
     }
 
-    pub fn status(&self) -> &String {
-        &self.status
+    pub fn status(&self) -> &str {
+        match self.status {
+            Status::ToDo => {"To-Do"},
+            Status::InProgress => {"In Progress"},
+            Status::Done => {"Done"},
+        }
     }
 }
 
